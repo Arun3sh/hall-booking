@@ -1,0 +1,19 @@
+.bookroom-wrapper {
+	margin-top: 20px;
+}
+.bookRoom-container,
+.createRoom-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.bookRoom-form,
+.createRoom-form {
+	display: flex;
+	flex-direction: column;
+	min-width: 280px;
+}
+#from-helper-text,
+#to-helper-text {
+	color: red;
+}
