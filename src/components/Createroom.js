@@ -7,8 +7,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import { API } from './global';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 function Createroom() {
+	const history = useHistory();
 	const inputstyle = {
 		marginTop: '15px',
 	};
@@ -17,12 +19,13 @@ function Createroom() {
 		newRoomData.booking_details = [];
 		fetch(`${API}/create-new-room`, {
 			method: 'POST',
-			body: JSON.stringify(newRoomData),
+			body: JSON.stringify([newRoomData]),
 			headers: {
 				'Content-type': 'application/json',
 			},
 		}).then(() => {
 			toast.success('New Room Added');
+			history.push('/');
 		});
 	};
 
