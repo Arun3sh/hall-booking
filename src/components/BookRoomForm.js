@@ -2,12 +2,16 @@ import './BookRoom.css';
 import { Button, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { API } from './global';
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 
 function BookRoomForm() {
+	const history = useHistory();
+	const [myRoom, setMyRoom] = useState([]);
 	const { id } = useParams();
+
 	const inputstyle = {
 		marginTop: '15px',
 	};
@@ -17,17 +21,22 @@ function BookRoomForm() {
 	const date = today.getDate() > 9 ? today.getDate() : `0${today.getDate()}`;
 	const myhrs = today.getHours() > 12 ? today.getHours() - 12 : today.getHours();
 	const hrs = myhrs > 9 ? myhrs : `0${myhrs}`;
-	const ampm = today.getHours() > 12 ? 'PM' : 'AM';
+
 	const time = hrs + ':' + today.getMinutes();
 	const todayDate = today.getFullYear() + '-' + month + '-' + date;
 
-	// // To set time limit for to
-	// const toTimeHrs = today.getHours() + 1 > 12 ? today.getHours() - 12 : today.getHours() + 1;
-	// const timeHrs = toTimeHrs > 9 ? toTimeHrs : `0${toTimeHrs}`;
-	// const to = timeHrs + ':' + today.getMinutes();
+	const getBookingData = () => {
+		fetch(`${API}/book-room/${id}`, {
+			method: 'GET',
+		})
+			.then((data) => data.json())
+			.then((d) => setMyRoom(d));
+	};
+
+	useEffect(getBookingData, []);
 
 	const bookRoom = (newData) => {
-		newData.id = id;
+		newData.id = myRoom.room_id;
 		fetch(`${API}/book-room/${id}`, {
 			method: 'PUT',
 			body: JSON.stringify(newData),
@@ -36,6 +45,7 @@ function BookRoomForm() {
 			},
 		}).then(() => {
 			toast.success('room booked');
+			history.push('/');
 		});
 	};
 
@@ -55,15 +65,21 @@ function BookRoomForm() {
 		},
 		validationSchema: formValidationSchema,
 		onSubmit: (values) => {
-			bookRoom(values);
-			console.log(values);
+			const check = myRoom.booking_details.filter(
+				(d) => d.date === values.date && d.to >= values.from
+			);
+			if (check.length === 0) {
+				bookRoom(values);
+			} else {
+				alert('Room already booked on that date and time');
+			}
 		},
 	});
 
 	return (
 		<div className="container-sm bookRoom-wrapper">
 			<div className="bookRoom-container">
-				<h3>Book Room {id}</h3>
+				<h3>Book Room </h3>
 				<form className="bookRoom-form" onSubmit={handleSubmit}>
 					<TextField
 						id="name"
