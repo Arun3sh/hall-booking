@@ -7,6 +7,7 @@ import BookRoomForm from './components/BookRoomForm';
 import { toast } from 'react-toastify';
 import Createroom from './components/Createroom';
 import BookRoom from './components/BookRoom';
+import Viewbookedroom from './components/Viewbookedroom';
 
 toast.configure();
 
@@ -25,6 +26,9 @@ function App() {
 				</Route>
 				<Route path="/create-new-room">
 					<Createroom />
+				</Route>
+				<Route path="/view-booked-room">
+					<Viewbookedroom />
 				</Route>
 			</Switch>
 		</div>
