@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import Createroom from './components/Createroom';
 import BookRoom from './components/BookRoom';
 import Viewbookedroom from './components/Viewbookedroom';
+import Viewbookedcustomer from './components/Viewbookedcustomer';
 
 toast.configure();
 
@@ -29,6 +30,9 @@ function App() {
 				</Route>
 				<Route path="/view-booked-room">
 					<Viewbookedroom />
+				</Route>
+				<Route path="/view-booked-customer">
+					<Viewbookedcustomer />
 				</Route>
 			</Switch>
 		</div>

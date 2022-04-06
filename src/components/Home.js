@@ -13,10 +13,10 @@ function Home() {
 				<Button variant="outlined" onClick={() => history.push('/book_room')}>
 					Book Room
 				</Button>
-				<Button variant="outlined" onClick={() => history.push('/create-new-room')}>
+				<Button variant="outlined" onClick={() => history.push('/view-booked-room')}>
 					View Booked Data by Room
 				</Button>
-				<Button variant="outlined" onClick={() => history.push('/create-new-room')}>
+				<Button variant="outlined" onClick={() => history.push('/view-booked-customer')}>
 					View Booked Customers
 				</Button>
 			</div>

@@ -14,7 +14,7 @@ function Viewbookedroom() {
 	};
 	useEffect(getroomData, []);
 
-	const [activeTab, setActiveTab] = useState(0);
+	const [activeTab, setActiveTab] = useState();
 	const handleChange = (index) => {
 		setActiveTab(index);
 	};
@@ -34,20 +34,20 @@ function Viewbookedroom() {
 				))}
 			</div>
 			<div className="room-status-container">
-				<GetBookingDetails id={id} />
+				{id === undefined ? 'Please select a Room' : <GetBookingDetails id={id} />}
 			</div>
 		</div>
 	);
 }
 
 function GetBookingDetails({ id }) {
-	const [useData, getUseData] = useState([]);
+	const [useData, setUseData] = useState([]);
 	const getroomData = () => {
 		fetch(`${API}/book-room/${id}`, {
 			method: 'GET',
 		})
 			.then((data) => data.json())
-			.then((data) => getUseData(data.booking_details));
+			.then((data) => setUseData(data.booking_details));
 	};
 	useEffect(getroomData, [id]);
 
